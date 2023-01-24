@@ -1,0 +1,50 @@
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        // HashMap -> O(n) + O(n) Aux.Space
+        HashMap<Integer, Integer> freq = new HashMap<>();
+        for (int x : nums) {
+            freq.put(x, freq.getOrDefault(x, 0) + 1);
+        }
+
+        int res = 0;
+        for (int x : freq.keySet()) {
+            if ((k > 0 && freq.containsKey(x + k)) || (k == 0 && freq.get(x) > 1)) {
+                res++;
+            }
+        }
+        return res;
+    }
+}
+
+/*
+// Sorting the Array -> O(nlogn)
+        int n = nums.length;
+        int count = 0;
+        Arrays.sort(nums);
+
+        int low = 0;
+        int high = 1;
+        while(high<n && low<n) {
+            if(nums[high]-nums[low]==k) {
+                count++;
+                low++;
+                high++;
+                while(high<n && nums[high]==nums[high-1]) high++;
+            }
+            else if(nums[high]-nums[low]>k) {
+                low++;
+                if(high-low==0) high++;
+            }
+            else {
+                high++;
+            }
+        }
+        return count;
+*/
+
+Related Topics-
+Array
+Hash Table
+Two Pointers
+Binary Search
+Sorting
