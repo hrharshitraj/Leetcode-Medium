@@ -1,0 +1,22 @@
+class Solution {
+    public int numSub(String s) {
+        int n = s.length();
+        long count = 0;
+        long subs = 0;
+        long mod = (int)1e9+7;
+
+        for(int i=0; i<n; i++) {
+            if(s.charAt(i)=='1') count++;
+            else {
+                subs += (count*(count+1))/2;
+                count = 0;
+            }
+        }
+        subs += (count*(count+1))/2;
+        return (int)(subs%mod);
+    }
+}
+
+Related Topics-
+Math
+String
