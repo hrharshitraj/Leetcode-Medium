@@ -1,0 +1,22 @@
+class Solution {
+    public int countHomogenous(String s) {
+        int n = s.length();
+        long count = 1;
+        long res = 0;
+        long mod = (int)1e9+7;
+
+        for(int i=1; i<n; i++) {
+            if(s.charAt(i)==s.charAt(i-1)) count++;
+            else {
+                res += count*(count+1)/2;
+                count = 1;
+            }
+        }
+        res += count*(count+1)/2;
+        return (int)(res%mod);
+    }
+}
+
+Related Topics-
+Math
+String
