@@ -1,0 +1,50 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        int s1Len = s1.length();
+        int s2Len = s2.length();
+        if(s1Len>s2Len) return false;
+
+        HashMap<Character,Integer> map = new HashMap();
+        String str = "";
+
+        for(int i=0; i<s1Len; i++) {
+            map.put(s1.charAt(i),map.getOrDefault(s1.charAt(i),0)+1);
+        }
+
+        for(int i=0; i<s2Len-s1Len+1; i++) {
+            if(map.containsKey(s2.charAt(i))) {
+                str = s2.substring(i,i+s1Len);
+                if(perm(str,s1)==true) return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean perm(String str, String s1) {
+        int len = str.length();
+
+        HashMap<Character,Integer> s1Map = new HashMap();
+        for(int i=0; i<len; i++) {
+            s1Map.put(s1.charAt(i),s1Map.getOrDefault(s1.charAt(i),0)+1);
+        }
+
+        for(int i=0; i<len; i++) {
+            if(s1Map.containsKey(str.charAt(i))) {
+                int freq = s1Map.get(str.charAt(i));
+
+                if(freq==1) s1Map.remove(str.charAt(i));
+                else s1Map.put(str.charAt(i),freq-1);
+            }
+            else return false;
+        }
+
+        if(s1Map.size()==0) return true;
+        return false;
+    }
+}
+
+Related Topics-
+Hash Table
+Two Pointers
+String
+Sliding Window
