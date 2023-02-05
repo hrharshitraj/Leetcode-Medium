@@ -1,0 +1,22 @@
+class Solution {
+    public int findNthDigit(int n) {
+        int size = 1;
+        int start = 1;
+        long count = 9;
+
+        while(size*count<n) {
+            n -= size * count;
+            size++;
+            start *= 10;
+            count *= 10;
+        }
+
+        int tar = start + (n - 1)/size;
+        int index = (n-1)%size;
+        return String.valueOf(tar).charAt(index) - '0';
+    }
+}
+
+Related Topics-
+Math
+Binary Search
