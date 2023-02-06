@@ -1,0 +1,87 @@
+/*
+Hint
+(1/2)
+Calculate the median of the array as defined in the statement.
+
+Hint
+(2/2)
+Use custom sort function to sort values (Strongest first), then slice the first k.
+*/
+
+// 1st Solution-
+class Solution {
+    public int[] getStrongest(int[] arr, int k) {
+        Arrays.sort(arr);
+        int len = arr.length;
+        int m = arr[(len - 1) / 2];
+
+        List<Integer> list = new ArrayList<>(len);
+        for (int n : arr) {
+            list.add(n);
+        }
+
+        Collections.sort(list, (o1, o2) -> {
+            int temp1 = Math.abs(o1 - m);
+            int temp2 = Math.abs(o2 - m);
+            if (temp1 == temp2) {
+                return o2 - o1;
+            }
+            return temp2 - temp1;
+        });
+
+        int[] res = new int[k];
+        for (int i = 0; i < k; i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+}
+
+// 2nd Solution-
+
+class Solution {
+    public int[] getStrongest(int[] arr, int k) {
+        Arrays.sort(arr);
+        int n = arr.length;
+        int median = 0;
+        int ans[] = new int[k];
+
+        if(n%2==0) median = (n/2)-1;
+        else median = n/2;
+
+        int low = 0;
+        int high = n-1;
+        int i = 0;
+        while(i<k) {
+            if(arr[high]-arr[median] > arr[median]-arr[low]) {
+                ans[i] = arr[high];
+                high--;
+            }
+            else if(arr[high]-arr[median] < arr[median]-arr[low]) {
+                ans[i] = arr[low];
+                low++;
+            }
+            else {
+                ans[i] = arr[high];
+                high--;
+                i++;
+                while(i<k && arr[high]-arr[median] == arr[median]-arr[low]) {
+                    ans[i] = arr[high];
+                    high--;
+                    i++;
+                }
+                if(i<k) {
+                    ans[i] = arr[low];
+                    low++;
+                }
+            }
+            i++;
+        }
+        return ans;
+    }
+}
+
+Related Topics-
+Array
+Two Pointers
+Sorting
