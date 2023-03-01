@@ -1,0 +1,22 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        Queue<Integer> q = new PriorityQueue<Integer>();
+        for (int num : nums) {
+            q.add(num);
+        }
+        int i = 0;
+        while (q.size() > 0)
+            nums[i++] = q.poll();
+        return nums;
+    }
+}
+
+Related Topics-
+Array
+Divide and Conquer
+Sorting
+Heap (Priority Queue)
+Merge Sort
+Bucket Sort
+Radix Sort
+Counting Sort
