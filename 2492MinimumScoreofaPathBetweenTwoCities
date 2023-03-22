@@ -1,0 +1,46 @@
+/*
+Hint-
+(1/3)
+Can you solve the problem if the whole graph is connected?
+(2/3)
+Notice that if the graph is connected, you can always use any edge of the graph in your path.
+(3/3)
+How to solve the general problem in a similar way? 
+Remove all the nodes that are not connected to 1 and n, then apply the previous solution in the new graph.
+*/
+
+class Solution {
+    private List<int[]>[] g;
+    private boolean[] vis;
+    private int ans = 1 << 30;
+
+    public int minScore(int n, int[][] roads) {
+        g = new List[n];
+        vis = new boolean[n];
+        Arrays.setAll(g, k -> new ArrayList<>());
+        for (var e : roads) {
+            int a = e[0] - 1, b = e[1] - 1, d = e[2];
+            g[a].add(new int[] {b, d});
+            g[b].add(new int[] {a, d});
+        }
+        dfs(0);
+        return ans;
+    }
+
+    private void dfs(int i) {
+        for (var nxt : g[i]) {
+            int j = nxt[0], d = nxt[1];
+            ans = Math.min(ans, d);
+            if (!vis[j]) {
+                vis[j] = true;
+                dfs(j);
+            }
+        }
+    }
+}
+
+Related Topics-
+Depth-First Search
+Breadth-First Search
+Union Find
+Graph
