@@ -1,0 +1,25 @@
+/*
+Hint-
+(1/2)
+What data structure could we use to efficiently perform these removals?
+(2/2)
+Use a stack to store the characters. Pop one character off the stack at each star. 
+Otherwise, we push the character onto the stack.
+*/
+
+class Solution {
+  public String removeStars(String s) {
+    StringBuilder sb = new StringBuilder();
+    for (final char c : s.toCharArray())
+      if (c == '*')
+        sb.deleteCharAt(sb.length() - 1);
+      else
+        sb.append(c);
+    return sb.toString();
+  }
+}
+
+Related Topics-
+String
+Stack
+Simulation
