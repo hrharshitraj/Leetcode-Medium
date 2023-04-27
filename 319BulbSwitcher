@@ -1,0 +1,26 @@
+class Solution {
+    public int bulbSwitch(int n) {
+        // One Line Answer -> return (int)Math.sqrt(n);
+        if(n==0) return 0;
+        if(n==1 || n==2) return 1;
+
+        double low = 1;
+        double high = 2;
+        double lowVal = 0;
+        double highVal = 0;
+        while(true) {
+            lowVal = Math.floor(Math.pow(low,2));
+            highVal = Math.floor(Math.pow(high,2));
+            if(n >= lowVal && n<=highVal) {
+                if(n==highVal) return (int)high;
+                else return (int)low;
+            }
+            low++;
+            high++;
+        }
+    }
+}
+
+Related Topics-
+Math
+Brainteaser
