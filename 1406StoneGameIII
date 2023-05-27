@@ -1,0 +1,41 @@
+/*
+Hint-
+(1/2)
+The game can be mapped to minmax game. Alice tries to maximize the total score and Bob tries to minimize it.
+(2/2)
+Use dynamic programming to simulate the game. If the total score was 0 the game is "Tie", and if it has positive value then "Alice" wins, otherwise "Bob" wins.
+*/
+
+class Solution {
+  public String stoneGameIII(int[] stoneValue) {
+    // dp[i] := max "relative score" Alice can make w/ stoneValue[i:]
+    dp = new int[stoneValue.length];
+    Arrays.fill(dp, Integer.MIN_VALUE);
+
+    final int score = stoneGameIII(stoneValue, 0);
+    return score > 0 ? "Alice" : score < 0 ? "Bob" : "Tie";
+  }
+
+  private int[] dp;
+
+  private int stoneGameIII(int[] stoneValue, int i) {
+    if (i == stoneValue.length)
+      return 0;
+    if (dp[i] > Integer.MIN_VALUE)
+      return dp[i];
+
+    int sum = 0;
+    for (int j = i; j < i + 3 && j < stoneValue.length; ++j) {
+      sum += stoneValue[j];
+      dp[i] = Math.max(dp[i], sum - stoneGameIII(stoneValue, j + 1));
+    }
+
+    return dp[i];
+  };
+}
+
+Related Topics-
+Array
+Math
+Dynamic Programming
+Game Theory
