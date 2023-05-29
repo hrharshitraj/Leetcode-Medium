@@ -1,0 +1,43 @@
+// Part 1 of it(51. N-QUeens) where you had to print all the unique safe puzzles to place queens is done in Strivers Recursion playlist-
+
+class Solution {
+    private int nQueens(int n, char[][] board, int col, int[] leftRow, int[] lowerDiagonal, int[] upperDiagonal) {
+        int count = 0;
+        if(col==n) {
+            return 1;   // If col reaches till n, it means all valid safe places to put queen at every row is found, so you found an unique solution, return 1;
+        }
+
+        for(int row=0; row<n; row++) {
+            if(leftRow[row]==0 && lowerDiagonal[row + col]==0 && upperDiagonal[n-1 + col-row]==0) {
+                board[row][col] = 'Q';
+                leftRow[row] = 1;
+                lowerDiagonal[row+col] = 1;
+                upperDiagonal[n-1 + col-row] = 1;
+                count = count + nQueens(n,board,col+1,leftRow,lowerDiagonal,upperDiagonal);
+                leftRow[row] = 0;
+                lowerDiagonal[row+col] = 0;
+                upperDiagonal[n-1 + col-row] = 0;
+                board[row][col] = '.';
+            }
+        }
+
+        return count;
+    }
+
+    public int totalNQueens(int n) {
+        if(n==1) return 1;
+
+        char[][] board = new char[n][n];
+        for(int i=0; i<n; i++) Arrays.fill(board[i],'.');
+
+        int[] leftRow = new int[n];
+        int[] lowerDiagonal = new int[2*n-1];
+        int[] upperDiagonal = new int[2*n-1];
+
+        int uniquePuzz = nQueens(n,board,0,leftRow,lowerDiagonal,upperDiagonal);
+        return uniquePuzz;
+    }
+}
+
+Related Topics-
+Backtracking
