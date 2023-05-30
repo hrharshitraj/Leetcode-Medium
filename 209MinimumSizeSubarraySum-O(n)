@@ -1,0 +1,82 @@
+// O(n) solution-
+
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int left = 0;
+        int right = 0;
+        int sum = 0;
+        int min = Integer.MAX_VALUE;
+        
+        while(right<n) {
+            sum += nums[right];
+
+            if(sum>=target) { 
+                while(sum>=target) {
+                    sum -= nums[left]; 
+                    left++;
+                }
+                min = Math.min(min,right-left+2); //right-left+2 to find the window size
+            }
+            right++;
+        }
+
+        if(min==Integer.MAX_VALUE) return 0;
+        return min;
+    }
+}
+
+/*
+    public int minSubArrayLen(int target, int[] nums) {
+        int n = nums.length;
+        int low = 0;
+        int high = 0;
+        int ans = Integer.MAX_VALUE;
+        int remTar = target;
+        int count = 0;
+
+        while(high<n) {
+            if(nums[high]>=target) return 1;
+
+            if(remTar-nums[high]>0) {
+                remTar -= nums[high];
+                high++;
+            }
+            else if(remTar-nums[high]==0) {
+                remTar -= nums[high];
+                int len = high-low+1;
+                ans = Math.min(ans,len);
+
+                remTar += nums[low];
+                low++;
+                high++;
+            }
+            else {
+                int len = high-low+1;
+                ans = Math.min(ans,len);
+                remTar -= nums[high];
+
+                while(remTar<0) {
+                    remTar += nums[low];
+                    low++;
+                    count++;
+                }
+                if(count>1) {
+                    len = len-count+1;
+                    ans = Math.min(ans,len);
+                }
+                count = 0;
+                high++;
+            }
+        }
+
+        if(ans==Integer.MAX_VALUE) ans = 0;
+        return ans;
+    }
+*/
+
+Related Topics-
+Array
+Binary Search
+Sliding Window
+Prefix Sum
