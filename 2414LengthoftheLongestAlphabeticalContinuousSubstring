@@ -1,0 +1,35 @@
+/*
+Hint-
+(1/2)
+What is the longest possible continuous substring?
+(2/2)
+The size of the longest possible continuous substring is at most 26, so we can just brute force the answer.
+*/
+
+class Solution {
+    public int longestContinuousSubstring(String s) {
+        int n = s.length();
+        int maxLen = 1;
+        int len = 1;
+
+        int low = 0;
+        int high = 1;
+
+        while(low<n && high<n) {
+            if((s.charAt(high)-'a')-(s.charAt(high-1)-'a')==1) {    // You will get ASCII value of characters that'll make it easy to compare if both the characters are continuous alphabetically;
+                len++;
+            }
+            else {
+                maxLen = Math.max(maxLen,len);
+                len = 1;
+                low = high;
+            }
+            high++;
+        }
+        maxLen = Math.max(maxLen,len);
+        return maxLen;
+    }
+}
+
+Related Topics-
+String
