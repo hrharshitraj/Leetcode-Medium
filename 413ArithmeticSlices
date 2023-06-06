@@ -1,0 +1,57 @@
+// If it passes all the testcase, I'll treat myself!
+class Solution {
+    private boolean threeLen(int[] nums, int low, int high) {
+        int diff = nums[low+1]-nums[low];
+        int diff2 = nums[low+2]-nums[low+1];
+        if(diff==diff2) return true;
+        return false;
+    }
+
+    public int numberOfArithmeticSlices(int[] nums) {
+        int n = nums.length;
+        if(n==2) return 0;    // If array length is 2, there's no point checking Arithmetic slices of length 3 as there would be 0
+
+        int count = 0;  // Count of Arithmetic slices of length >= 3;
+        int low = 0;
+        int high = 2;
+        while(low<n-2) {
+            if(threeLen(nums,low,high)) {      // If it's arithmetic slice of length 3, it means we have got a Arithmetic slice and most importantly, if the next number difference is 'diff' then those would also contribute to the arithmetic slice;
+                count++;
+                int diff = nums[high]-nums[high-1];   // Find the diff
+                high++;
+                while(high<n && nums[high]-nums[high-1]==diff) {   // Until diff is matched, keep increasing the count and keep going to next high;
+                    count++;
+                    high++;
+                }
+            }
+            low++;  // Now, go to next element to again check from that element how many slices you'll get;
+            high = low+2;
+        }
+        return count;
+    }
+
+    /*
+    // Short and Sweet code;
+    // Let's say you find a slice of len 3, increase curr by 1,
+    // Now, the moment if next element also have the same diff, it means along with contributing to the current subarray, it also will contribute a slice to the next subarray;   that's why "total = total + curr";
+    // If not then, curr as 0 as it doesn't have the required slice;
+    
+    public int numberOfArithmeticSlices(int[] nums) {
+        int curr = 0;
+        int total = 0;
+        for(int i = 2;i < nums.length;i++){
+            if(nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]){
+                curr++;
+                total = total + curr;
+            }else{
+                curr = 0;
+            }
+        }
+        return total;
+    }
+    */
+}
+
+Related Topics-
+Array
+Dynamic Programming
