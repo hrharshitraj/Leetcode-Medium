@@ -1,0 +1,54 @@
+/*
+Hint-
+(1/3)
+To check if a given sequence is arithmetic, 
+just check that the difference between every two consecutive elements is the same.
+(2/3)
+If and only if a set of numbers can make an arithmetic sequence, 
+then its sorted version makes an arithmetic sequence. 
+So to check a set of numbers, sort it, and check if that sequence is arithmetic.
+(3/3)
+For each query, 
+get the corresponding set of numbers which will be the sub-array represented by the query, sort it, 
+and check if the result sequence is arithmetic.
+*/
+
+class Solution {
+    public List<Boolean> checkArithmeticSubarrays(int[] nums, int[] l, int[] r) {
+        int n = nums.length;
+        int lLen = l.length;
+        int rLen = r.length;
+        List<Boolean> list = new ArrayList();   // Boolean list to store true or false of every query;
+
+        int curridx = 0;
+        while(curridx<lLen) {     // Iterate every query until l[n-1](or r[n-1])th query is there;
+            int arrLen = r[curridx]-l[curridx]+1;
+            if(arrLen==2) list.add(true);
+            else {
+                int arr[] = new int[arrLen];   // This gives you the elements of nums[] array int the range between l and r query;
+                int j=0;
+                for(int i=l[curridx]; i<=r[curridx]; i++) {     // Store elements of that query in new array called arr[];
+                    arr[j] = nums[i];
+                    j++;
+                }
+                Arrays.sort(arr);   // Sort it to find the differences
+
+                int diff = arr[1]-arr[0];   // Finding difference to further check if they are arithmetic subarrays or not;
+                int i=0;
+                for(i=2; i<arrLen; i++) {
+                    if(arr[i]-diff!=arr[i-1]) {
+                        break;  // If difference is not similar, not arithmetic so break the loop;
+                    }
+                }
+                if(i==arrLen) list.add(true);   // It means all the differences between every element is same, correct Arithmetic Subarray;
+                else list.add(false);
+            }
+            curridx++;   // Until you are in range queries;
+        }
+        return list;
+    }
+}
+
+Related Topics-
+Array
+Sorting
