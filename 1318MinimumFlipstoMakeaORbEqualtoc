@@ -1,0 +1,36 @@
+/*
+Hint-
+(1/1)
+Check the bits one by one whether they need to be flipped.
+*/
+
+class Solution {
+    public int minFlips(int a, int b, int c) {
+        int count = 0;
+        while(a>0 || b>0 || c>0) {      // Until there's even one among a,b and c is not checked, possibility of filping the bit is possible;
+
+            // It tells you about if the rightmost bit is set(1) or not(0);
+            int cAnd = c&1;
+            int aAnd = a&1;
+            int bAnd = b&1;
+
+            if(cAnd==1) {   // If cAnd is 1, it means if even 1 among a or b rightmost bit is 1, no need to change any bit;
+                if(aAnd==0 && bAnd==0) count++;   // Only if both a and b's rightmost bit is 0, then only you need to flip the bit, that too of only one as it would be enough to make then equal as or of 0 OR 1 = 1;
+            }
+            else {  // If cAnd is 0, both bits of a and b neend to be 0, otherwise you need to flip both of the bit;
+            // Even if a single bit is 1, that also must be flipped, that's why it has the potential to flip 2 bits;
+                if(aAnd==1) count++;
+                if(bAnd==1) count++;
+            }
+
+            // Need to right shift all these to continue the process further-
+            a = a>>1;
+            b = b>>1;
+            c = c>>1;
+        }
+        return count;
+    }
+}
+
+Related Topics-
+Bit Manipulation
