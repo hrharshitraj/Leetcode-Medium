@@ -1,0 +1,48 @@
+/*
+Hint-
+(1/4)
+What if the problem was instead determining if you could generate a valid array with nums[index] == target?
+(2/4)
+To generate the array, set nums[index] to target, nums[index-i] to target-i,
+and nums[index+i] to target-i.
+Then, this will give the minimum possible sum, so check if the sum is less than or equal to maxSum.
+(3/4)
+n is too large to actually generate the array, 
+so you can use the formula 1 + 2 + ... + n = n * (n+1) / 2 to quickly find the sum of nums[0...index] and nums[index...n-1].
+(4/4)
+Binary search for the target. If it is possible, then move the lower bound up. Otherwise, move the upper bound down.
+*/
+
+class Solution {
+  public int maxValue(int n, int index, int maxSum) {
+    maxSum -= n;
+
+    int l = 0;
+    int r = maxSum;
+
+    // Find the first value x s.t. if A[index] = x
+    // Sum(A) >= maxSum
+    while (l < r) {
+      final int m = (l + r) / 2;
+      if (getSum(n, index, m) >= maxSum)
+        r = m;
+      else
+        l = m + 1;
+    }
+
+    return getSum(n, index, l) > maxSum ? l : l + 1;
+  }
+
+  // Minimum sum if nums[index] = x
+  private long getSum(int n, int index, int x) {
+    long l = Math.min(index, x - 1);
+    long r = Math.min(n - index, x);
+    long lSum = ((x - 1) + (x - 1 - l + 1)) * l / 2;
+    long rSum = (x + (x - r + 1)) * r / 2;
+    return lSum + rSum;
+  }
+}
+
+Related Topics-
+Binary Search
+Greedy
