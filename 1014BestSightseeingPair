@@ -1,0 +1,44 @@
+/*
+Hint-
+(1/1)
+Can you tell the best sightseeing spot in one pass (ie. as you iterate over the input?) What should we store or keep track of as we iterate to do this?
+*/
+
+/*
+Brute force is to get every pair and calculate the value, O(n^2);
+We aim to find the maximum value in O(n);
+Max(values[i] + values[j] + i - j) is what we are looking for,
+(values[i] + i) + (values[j] - j) -> If we maximise values[i]+i and values[j]-j, we would get the max value;
+Store the value by adding values[i]+i of every element, but since we are looking for max value, at every index we will be storing maximum value till the curr element; We do it from 0 to n-1 for values[i]+i as i<j;
+Similarly from n-1 to 1, we store max value of values[j]-j;
+
+Add both the values(maxLow+maxHigh) to get the maximum score of a pair of sightseeing spots.
+*/
+
+class Solution {
+    public int maxScoreSightseeingPair(int[] values) {
+        int n = values.length;
+        // You need to have a value that stores values[i]+i, and then compare this value till the current element's maximum value of values[i]+i, that's why low and maxLow values are needed, same with high and maxHigh that stores values[j]-j;
+        int low = values[0]+0;
+        int maxLow = values[0]+0;
+        int high = 0;
+        int highMax = Integer.MIN_VALUE;
+
+// Remember that i must be less than j, so you need to check the max((values[i] + i) + (values[j] - j)) till the last visited index;
+        for(int j=1; j<n; j++) {
+            high = values[j]-j;
+            // maxHigh = Math.max(maxHigh,high);    // We needn't to have the max values of values[j]-j, we need current values[j]-j value;
+            // Max of values[j]-j is being compared by the maximum value of values[i]+i till the last index as i<j;
+            highMax = Math.max(highMax,(maxLow+high));    
+            low = values[j]+j;
+            maxLow = Math.max(maxLow,low);
+               // After getting max values of (values[i] + i) + (values[j] - j) till index j, we get the max value of values[j]+j so that we can compare the max values of next element;
+        }
+
+        return highMax;
+    }
+}
+
+Related Topics-
+Array
+Dynamic Programming
