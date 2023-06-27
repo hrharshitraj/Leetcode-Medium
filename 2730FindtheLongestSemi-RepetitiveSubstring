@@ -1,0 +1,42 @@
+/*
+Hint-
+(1/1)
+Since n is small, we can just check every substring, and if the substring is semi-repetitive, maximize the answer with its length.
+*/
+
+class Solution {
+    public int longestSemiRepetitiveSubstring(String s) {
+        int n = s.length();
+        int len = 1;
+        int low = 0;
+        int high = 0;
+        int cons = 0;
+        int count = 1;
+        
+        while(high<n-1) {
+            int currChar = s.charAt(high)-'0';
+            int nextChar = s.charAt(high+1)-'0';
+            
+            if(currChar!=nextChar) {
+                if(cons==0) low++;
+            }
+            else {
+                cons++;
+                if(cons>1) {
+                    len = Math.max(len,count);
+                    count = high-low;
+                    low = high;
+                    cons--;
+                }
+            }
+            high++;
+            count++;
+        }
+        len = Math.max(len,count);
+        return len;
+    }
+}
+
+Related Topics-
+String
+Sliding Window
