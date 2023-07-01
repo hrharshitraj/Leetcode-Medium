@@ -1,0 +1,51 @@
+/*
+Hint-
+(1/2)
+We have to give each bag to one of the children. How can we enumerate all of the possibilities?
+(2/2)
+Use recursion and keep track of the current number of cookies each child has. Once all the bags have been distributed, find the child with the most cookies.
+*/
+
+class Solution {
+    private int[] cookies;
+    private int[] cnt;
+    private int k;
+    private int n;
+    private int ans = 1 << 30;
+
+    public int distributeCookies(int[] cookies, int k) {
+        n = cookies.length;
+        cnt = new int[k];
+        Arrays.sort(cookies);
+        this.cookies = cookies;
+        this.k = k;
+        dfs(n - 1);
+        return ans;
+    }
+
+    private void dfs(int i) {
+        if (i < 0) {
+            // ans = Arrays.stream(cnt).max().getAsInt();
+            ans = 0;
+            for (int v : cnt) {
+                ans = Math.max(ans, v);
+            }
+            return;
+        }
+        for (int j = 0; j < k; ++j) {
+            if (cnt[j] + cookies[i] >= ans || (j > 0 && cnt[j] == cnt[j - 1])) {
+                continue;
+            }
+            cnt[j] += cookies[i];
+            dfs(i - 1);
+            cnt[j] -= cookies[i];
+        }
+    }
+}
+
+Related Topics-
+Array
+Dynamic Programming
+Backtracking
+Bit Manipulation
+Bitmask
