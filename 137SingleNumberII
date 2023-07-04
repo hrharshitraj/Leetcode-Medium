@@ -1,0 +1,19 @@
+class Solution {
+    public int singleNumber(int[] nums) {
+        HashMap<Integer,Integer> hs = new HashMap<>();
+        int ans = -1;
+
+        for(int i=0; i<nums.length; i++) {
+            hs.put(nums[i],hs.getOrDefault(nums[i],0)+1);               
+        }
+
+        for(Map.Entry<Integer,Integer> e : hs.entrySet()) {
+            if(e.getValue() == 1) ans = e.getKey();
+        }
+        return ans;
+    }
+}
+
+Related Topics-
+Array
+Bit Manipulation
